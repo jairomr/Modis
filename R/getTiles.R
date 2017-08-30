@@ -5,7 +5,7 @@ getTile<-function(lat = -14,long = -52){
 
 
 
-getTiles<-function(latA,longA,latB,longB,latC,longC){
+getTiles<-function(latA,longA,latB,longB,latC,longC, query=T){
   return = NULL
   if(latA<latC|longA>longB){
     stop('Error: Informed coordinate does not form a valid geometry')
@@ -21,6 +21,7 @@ getTiles<-function(latA,longA,latB,longB,latC,longC){
   c=getTile(latC,longC)
   for(v in a$iv[1]:c$iv[length(c$iv)]){
     for(h in a$ih[1]:b$ih[length(b$ih)]){
+
       if(v<10){
         resv=paste('0',v,sep = '')
       }else{
