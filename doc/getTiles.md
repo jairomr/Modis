@@ -1,5 +1,6 @@
-#getTiles() 
-##This function returns the tiles, based on the coordinates
+# getTiles()
+
+## This function returns the tiles, based on the coordinates
 Example to obtain the titles of the state of Mato Grosso
 First define the coordinates A, B, and C
 ![](http://jobs.jairomr.com.br/img/getTilesMT.png)
