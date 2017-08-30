@@ -1,20 +1,5 @@
 
 
-# Charles Caioni
-
-# Inserindo shapefile
-
-# Amazonia
-setwd("/mnt/data/dados_publicos/Documents/MODIS_local/AMAZONIA/PRODUTOS/shapefile")
-am <- readOGR(".",layer="panamazonpoly")
-proj4string(am) <- CRS("+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0 ")
-
-# Mato Grosso
-setwd("/mnt/data/dados_publicos/Documents/data_geo/shapes/mato_grosso/Limite_municipal_250_10")
-mt <- readOGR(".",layer="MT_")
-np="+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0 "
-mt2= spTransform(mt,np)
-
 # .............................Iniciando o processo de conversao..............................
 
 # Converter de hdf para tiff
@@ -29,7 +14,7 @@ library(gdalUtils)
 
 files <- dir(pattern = ".hdf")
 
-gdalinfo("MOD16A2.A2001001.h10v09.006.2017068135746.hdf")
+
 
 filename<-function(fileName){
   return (paste0("ET.",substr(fileName,01,41), ".tif"))
@@ -54,10 +39,10 @@ list.files()
 
 
 
-# MOSAICAR AS IMAGENS: EVAPOTRANSPIRAÃAO 
+# MOSAICAR AS IMAGENS: EVAPOTRANSPIRAÃAO
 
-mosaicGTiffs = function(proj.loc, gtiffs, mosaicName, overwrite){ 
-  if("gdalUtils" %in% rownames(installed.packages()) == FALSE){ # checks if gdalutils is installed 
+mosaicGTiffs = function(proj.loc, gtiffs, mosaicName, overwrite){
+  if("gdalUtils" %in% rownames(installed.packages()) == FALSE){ # checks if gdalutils is installed
     install.packages("gdalUtils", repos="http://r-forge.r-project.org")
     require(gdalUtils)
   }
@@ -85,26 +70,26 @@ for (a in 1:length(ano))
   {
     ls.files_m = ls.files_a[substr(ls.files_a, 17, 19) == dia[m]]
     print(dia[m])
-    
+
     # try it out
     # load variables
     proj.loc = "/mnt/data/dados_publicos/Documents/MODIS_local/AMAZONIA/DADOS_BRUTOS/et006/TIFF"
     # gtiffs2 = list.files("/mnt/data/dados_publicos/Documents/MODIS_local/AMAZONIA/DADOS_BRUTOS/evapotranspiraÃÂ§ao_MOD16/MOD16A2",pattern = "*.tif", full.names = T) # list the files
     myMosaic = paste0("ET.",ano[a],'',dia[m]) # the name of the final Mosaicked_ET GeoTIFF
-    
+
     #myMosaic = paste0("ET.AS.D",dia[m],'',ano[a]) # the name of the final Mosaicked_ET GeoTIFF
-    
-    
+
+
         # execute
     mosaicGTiffs(proj.loc = proj.loc, gtiffs = ls.files_m, mosaicName = myMosaic, overwrite = T)
     rm(proj.loc,gtiffs2,myMosaic) # remove variables to save memory
     list.files()
-    
+
   }
 }
 
 
-# Stack ds imagens e excluindo valores diferentes de 0 a 65528 
+# Stack ds imagens e excluindo valores diferentes de 0 a 65528
 
 setwd("/mnt/data/dados_publicos/Documents/MODIS_local/AMAZONIA/DADOS_BRUTOS/et006/TIFF/Mosaicked")
 x01=list.files(,pattern="ET.20");x01
